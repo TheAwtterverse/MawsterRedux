@@ -1,4 +1,4 @@
-import { Client, GuildMember } from 'discord.js';
+import { Client, ChatInputCommandInteraction, GuildMember } from "discord.js";
 import jailModel, { IJail } from '../schemas/jail';
 import { Logger } from '../core/logger';
 import { audit } from './audit';
@@ -28,7 +28,14 @@ export const catchRejoin = async (member: GuildMember) => {
   else await audit(`Member ${member} found back to the server but I was not able to put him back to jail.`);
 }
 
-export const jail = async (member: GuildMember, reason: string) : Promise<boolean> => {
+export const jail = async (interaction: ChatInputCommandInteraction) : Promise<boolean> => {
+
+  const user = interaction.options.getUser('target');
+  const reason = interaction.options.getString('reason') ?? 'No reason provided';
+  if (!user) return false;
+  if(!interaction.guild) return false;
+
+  const member = await interaction.guild.members.fetch(user)
 
   const success = await jailMember(member, reason);
   if (!success) return false;
@@ -42,7 +49,6 @@ export const jail = async (member: GuildMember, reason: string) : Promise<boolea
   );
 
   member.send(`You've been put into jail with the reason: ${reason}. Please open a ticket or wait.`).catch(logger.error);
-
   return true;
 };
 

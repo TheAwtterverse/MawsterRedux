@@ -2,10 +2,12 @@ import {
   CommandInteraction,
   Client,
   ApplicationCommandType,
+  ChatInputCommandInteraction,
   PermissionFlagsBits,
   ApplicationCommandOptionType, ApplicationCommandOptionData
 } from "discord.js";
 import { Command } from "../../interfaces/command";
+import { jail } from "../../mods/moderation";
 
 export = {
   name: "jail",
@@ -15,7 +17,7 @@ export = {
   cooldown: 0,
   options: [
     {
-      name: 'user',
+      name: 'target',
       description: 'User to jail',
       required: true,
       type: ApplicationCommandOptionType.User,
@@ -28,7 +30,12 @@ export = {
     } as ApplicationCommandOptionData,
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
-    const content = "Hello there!";
+
+    let content = "There was an error executing the jai.";
+    if (interaction instanceof ChatInputCommandInteraction) {
+      if(await jail(interaction))
+        content = "User has been jailed.";
+    } else content = "There was an error executing the jail.";
 
     await interaction.reply({
       ephemeral: true,
