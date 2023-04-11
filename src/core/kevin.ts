@@ -61,8 +61,12 @@ export default class Kevin {
         ephemeral: true,
         content: `You are on ${Math.floor((this.cooldown.get(`slash-${command.name}.${interaction.user.id}`)! - Date.now()) / 1000)}s cooldown!`
       });
-
-    command.run(this.client, interaction);
+    try {
+      await command.run(this.client, interaction);
+    }
+    catch (e) {
+      this.logger.error(e);
+    }
 
     if (command.cooldown) {
       this.cooldown.set(
