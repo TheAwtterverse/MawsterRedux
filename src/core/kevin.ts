@@ -8,7 +8,7 @@ import { NullClient } from './errors';
 /**
  *  Command handler to autoload commands
  *
- * @author AlexOttr <alex@ottr.one>
+ * @author AlexOttr <alex@tailbyte.org>
  * @version 2.0
  *
  * @exports Kevin

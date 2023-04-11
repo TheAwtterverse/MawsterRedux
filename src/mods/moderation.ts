@@ -8,7 +8,7 @@ import { audit } from './audit';
  *
  * Extends the basic functionality with smol moderation tools.
  *
- * @author AlexOttr <alex@ottr.one>
+ * @author AlexOttr <alex@tailbyte.org>
  * @version 1.1
  */
 

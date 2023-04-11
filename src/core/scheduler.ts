@@ -3,7 +3,7 @@ import Logger from './logger';
 /**
  *  Schedule handler to plan events
  *
- * @author AlexOttr <alex@ottr.one>
+ * @author AlexOttr <alex@tailbyte.org>
  * @version 2.0
  *
  * @exports Scheduler
@@ -17,11 +17,11 @@ export class Scheduler {
 
     setInterval(
     () => {
-      this.tasks.forEach((task, name) => {
+      this.tasks.forEach((task) => {
         if (task.date <= Date.now()) this.handleTask(task);
       });
     },
-    1 * 1000)
+    1000)
   }
 
   private handleTask(task: Task) {

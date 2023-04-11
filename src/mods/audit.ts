@@ -2,8 +2,16 @@ import { Client, Guild, TextChannel } from 'discord.js';
 import settingsModel from '../schemas/settings';
 import { Logger } from '../core/logger';
 
-const logger = Logger.register('Audit', true)
+/**
+ * LexBot Mod for auditing into a channel
+ *
+ * Can be used for logging or moderation purposes
+ *
+ * @author AlexOttr <alex@tailbyte.org>
+ * @version 1.1
+ */
 
+const logger = Logger.register('Audit', true)
 let guild: Guild | undefined = undefined;
 
 export default async (client: Client) => {
