@@ -1,4 +1,4 @@
-import { Client, ChatInputCommandInteraction, GuildMember } from "discord.js";
+import { Client, ChatInputCommandInteraction, GuildMember, Guild } from "discord.js";
 import jailModel, { IJail } from '../schemas/jail';
 import { Logger } from '../core/logger';
 import { audit } from './audit';
@@ -14,9 +14,16 @@ import { audit } from './audit';
 
 const JailRole = process.env.JAIL || '';
 const logger = Logger.register('Mods', true)
+let guild: Guild | undefined = undefined;
 
 export default async (client: Client) => {
-
+  try {
+    guild = await client.guilds.fetch(process.env.GUILD || '');
+    // check if has mute permission
+  }
+  catch (error) {
+    logger.error(error);
+  }
 };
 
 export const catchRejoin = async (member: GuildMember) => {
